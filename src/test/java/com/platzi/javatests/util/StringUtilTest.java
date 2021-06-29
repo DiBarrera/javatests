@@ -6,17 +6,22 @@ import org.junit.Test;
 public class StringUtilTest {
 
     @Test
-    public void testRepeat() {
-
-        Assert.assertEquals("Hola Mundo Hola Mundo Hola Mundo ", StringUtil.repeat("Hola Mundo ", 3));
+    public void repeat_string_once() {
         Assert.assertEquals("Hola Mundo Java ", StringUtil.repeat("Hola Mundo Java ", 1));
     }
-/*
-    private static void assertEquals(String actual, String expected) {
 
-        if (!actual.equals(expected)) {
-            throw new RuntimeException(actual + " is not equal to expected " + expected);
-        }
+    @Test
+    public void repeat_string_multiple_times() {
+        Assert.assertEquals("Hola Mundo Hola Mundo Hola Mundo ", StringUtil.repeat("Hola Mundo ", 3));
     }
- */
+
+    @Test
+    public void repeat_string_zero_times() {
+        Assert.assertEquals("", StringUtil.repeat("Hola Mundo ", 0));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void repeat_string_negative_times() {
+        StringUtil.repeat("Hola Java ", -1);
+    }
 }
