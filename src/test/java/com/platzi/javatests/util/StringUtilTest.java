@@ -4,9 +4,7 @@ public class StringUtilTest {
 
     public static void main(String[] args) {
 
-        String result = StringUtil.repeat("Hola Mundo ", 3);
-
-        assertEquals(result, "Hola Mundo Hola Mundo Hola Mundo ");
+        assertEquals(StringUtil.repeat("Hola Mundo ", 3), "Hola Mundo Hola Mundo Hola Mundo ");
 
         // System.out.println(result);
         // if (result.equals("Hola Mundo Hola Mundo Hola Mundo ")) {
@@ -16,9 +14,7 @@ public class StringUtilTest {
         //      System.out.println("ERROR");
         // }
 
-        String result1 = StringUtil.repeat("Hola Mundo Java ", 1);
-
-        assertEquals(result1, "Hola Mundo Java ");
+        assertEquals(StringUtil.repeat("Hola Mundo Java ", 1), "Hola Mundo Java ");
 
         // if (!result1.equals("Hola Mundo Java ")) {
         //     throw new RuntimeException("ERROR");
