@@ -108,7 +108,7 @@ dependency>
 <!-- Topics reviewed -->
 ## Topics reviewed
 
-In this repository you will find sql files that were varied exercises to practice searching for data in databases in different ways. The topics are made up of the different ways to do these searches. Topics such as a brief history of databases, the different types of databases, services, and other fundamental topics for a better general understanding about databases were also included.
+The topics seen in this course, provided the knowledge to be able to create tests and verify the correct operation of a java application, these are the main topics learned.
 
 ### Topics
 
