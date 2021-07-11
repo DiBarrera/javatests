@@ -189,7 +189,7 @@ public class StringUtilTest {
 }
 ``` 
 - When running the program, with the use of "throw new we can receive an indication of which line the error is occurring on.
-- <img src="/docs/java-testing-output1" alt="Throw new error"/>
+- <img src="/docs/java-testing-output1.png" alt="Throw new error"/>
 
 #### This is a small example of a unit test.
 
