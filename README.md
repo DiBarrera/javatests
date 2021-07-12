@@ -68,6 +68,8 @@ You will find the following files:
 - **The src directory**, containing the main files used for the course.
 - **The test directory** contains the files generated to test the classes created in src.
 
+- Inside our POM file, we insert the next lines:
+
 - To tell Maven that we will use Java 8 we must add the following lines of code:
 
 ```shell
@@ -77,6 +79,27 @@ You will find the following files:
 properties>
 ```
 
+- Just below the properties, we create the following labels where we will place the dependencies to use.
+
+```shell
+<dependencies>
+    // All the necessary dependencies go here.
+</dependencies>
+```
+
+- To implement the Junit library, using Maven, insert the following lines into the dependencies:
+
+```shell
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+    <scope>test</scope>
+</dependency>
+``` 
+
+- The following additions will go inside the dependencies tags.
+
 - To add Mockito in the project we insert the following lines:
 
 ```shell
@@ -85,7 +108,7 @@ properties>
   <artifactId>mockito-coreartifactId>
   <version>2.23.4version>
   <scope>testscope>
-dependency>
+<dependency>
 ```
 
 - To perform a database integration test we will use Spring and H2, insert the following lines into the dependencies:
@@ -100,8 +123,8 @@ dependency>
   <groupId>org.h2databasegroupId>
   <artifactId>h2artifactId>
   <version>1.4.197 version>
-dependency>
-```
+<dependency>
+``` 
 
 
 
@@ -127,7 +150,6 @@ The topics seen in this course, provided the knowledge to be able to create test
 
 
 
-
 <!-- Basics -->
 ## Basics
 
@@ -145,7 +167,7 @@ These steps are written so that the reader can get an idea of how the applicatio
 Using "throw to" we can receive indication of which line the error occurred.
 - For this example, we need two classes, in our package we create a class name StringUtil.java, will have the next lines:
 - #### StringUtil.java
-```markdown
+```shell
 package com.platzi.javatests.util;
 public class StringUtil {
     public static String repeat(String str, int times) {
@@ -160,7 +182,7 @@ public class StringUtil {
 - We insert a for loop with the purpose of reapting a simple text, that would be subject of our test.
 - Now we create a class in the test package with the name of StringUtilTest.java
 - #### StringUtilTest.java
-```markdown
+```shell
 package com.platzi.javatests.util;
 public class StringUtilTest {
     public static void main(String[] args) {
@@ -177,7 +199,7 @@ public class StringUtilTest {
 - As you can see, in the previous code, inside public static void main, we have an assertEquals, that would repeat a text a number of times, and is expecting the repeated text as a second parameter.
 - Pay atention to the blank space after the repeated text.
 - #### StringUtilTest.java
-```markdown
+```shell
 package com.platzi.javatests.util;
 public class StringUtilTest {
     public static void main(String[] args) {
@@ -188,10 +210,229 @@ public class StringUtilTest {
     }
 }
 ``` 
-- When running the program, with the use of "throw new we can receive an indication of which line the error is occurring on.
-- <img src="/docs/java-testing-output1.png" alt="Throw new error"/>
+- When running the program, with the use of "throw new" we can receive an indication of which line the error is occurring on.
+<img src="/docs/java-testing-output1.png" alt="Throw new error"/>
 
 #### This is a small example of a unit test.
+
+---------
+
+### Testing leap year. TDD (Test Driven Development).
+For this test, we´re going to need two classes, the class named DateUtil, and its test class.
+- Inside our class DateUtil, insert the following lines of code:
+- #### DateUtil.java
+```shell
+package com.platzi.javatests.util;
+public class DateUtil {
+    public static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+}
+``` 
+- For the test class, insert the next lines.
+- #### DateUtilLeapYearShould.java
+```shell
+package com.platzi.javatests.util;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
+public class DateUtilLeapYearShould {
+
+     /*
+      -All years divisible by 400 ARE leap years (1600, 2000, 2400),
+      -All years divisible by 100 but not by 400 are NOT leap years (1700, 1800, 1900),
+      -All years divisible by 4 but not by 100 ARE leap years (1996, 2004, 2008),
+      -All years not divisible by 4 are NOT leap years (2017, 2018, 2019).
+     */
+
+    @Test
+    public void return_true_when_year_is_divisible_by_400() {
+        assertThat( DateUtil.isLeapYear(1600), is(true) );
+        assertThat( DateUtil.isLeapYear(2000), is(true) );
+        assertThat( DateUtil.isLeapYear(2400), is(true) );
+    }
+
+    @Test
+    public void return_false_when_year_is_divisible_by_100_but_not_by_400() {
+        assertThat( DateUtil.isLeapYear(1700), is(false) );
+        assertThat( DateUtil.isLeapYear(1800), is(false) );
+        assertThat( DateUtil.isLeapYear(1900), is(false) );
+    }
+
+    @Test
+    public void return_true_when_year_is_divisible_by_4_but_not_by_100() {
+        assertThat( DateUtil.isLeapYear(1996), is(true) );
+        assertThat( DateUtil.isLeapYear(2004), is(true) );
+        assertThat( DateUtil.isLeapYear(2008), is(true) );
+    }
+
+    @Test
+    public void return_false_when_year_is_not_divisible_by_4() {
+        assertThat( DateUtil.isLeapYear(2017), is(false) );
+        assertThat( DateUtil.isLeapYear(2018), is(false) );
+        assertThat( DateUtil.isLeapYear(2019), is(false) );
+    }
+}
+``` 
+- Within these lines, we are covering all the checks for the test to be successful.
+- Once we run the program, we receive the response that all the tests have been successful.
+<img src="/docs/java-testing-output2.png" alt="output 2"/>
+
+---------
+
+### Movie app, Business test.
+For this test, we´re going to need serveral packages.
+- A data package which contain the interface that will store the movies in the database. Its class is called MovieRepository
+- A model package that will contain the classes that contain the application logic. Its classes are called Genre, and Movie
+- And a service package containing the business classes. Its class is called MovieService.
+- In the test package we will have the class called MovieServiceShould 
+- We should have the following class organization:
+```shell
+├───main
+│   └───java
+│       └───com
+│           └───platzi
+│               └───javatests
+│                   └───movies
+│                       ├───data
+│                       │       MovieRepository.java
+│                       │
+│                       ├───model
+│                       │       Genre.java
+│                       │       Movie.java
+│                       │
+│                       └───service
+│                               MovieService.java
+│    
+└───test
+    └───java
+        └───com
+            └───platzi
+                └───javatests
+                    └───movies
+                        └───service
+                              MovieServiceShould.java
+``` 
+- To test the application, we will have the following lines of code necessary below.
+- #### MovieRepository.java
+```shell
+public interface MovieRepository {
+    Movie findById(long id);
+    Collection<Movie> findAll();
+    void saveOrUpdate(Movie movie);
+}
+``` 
+- #### Movie.java
+```shell
+public class Movie 
+    private Integer id;
+    private String name;
+    private int minutes;
+    private Genre genre;
+
+    public Movie(String name, int minutes, Genre genre) {
+        this(null, name, minutes, genre);
+    }
+    public Movie(Integer id, String name, int minutes, Genre genre) {
+        this.id = id;
+        this.name = name;
+        this.minutes = minutes;
+        this.genre = genre;
+    }
+    public Integer getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public int getMinutes() {
+        return minutes;
+    }
+    public Genre getGenre() {
+        return genre;
+    }
+}
+``` 
+- #### Genre.java
+```shell
+public enum Genre {
+    ACTION, COMEDY, DRAMA, HORROR, THRILLER
+}
+``` 
+- #### MovieService.java
+```shell
+public class MovieService {
+
+    private MovieRepository movieRepository;
+
+    public MovieService(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
+
+    public Collection<Movie> findMoviesByGenre(Genre genre) {
+
+        return movieRepository.findAll().stream()
+                .filter(movie -> movie.getGenre() == genre).collect(Collectors.toList());
+    }
+
+    public Collection<Movie> findMoviesByLength(int length) {
+
+        return movieRepository.findAll().stream()
+                .filter(movie -> movie.getMinutes() <= length).collect(Collectors.toList());
+    }
+}
+``` 
+- And in the test class
+- #### MovieServiceShould.java
+```shell
+public class MovieServiceShould {
+
+    private MovieService movieService;
+
+    @Before
+    public void setUp() throws Exception {
+
+        MovieRepository movieRepository = Mockito.mock(MovieRepository.class);
+
+        Mockito.when(movieRepository.findAll()).thenReturn(
+                Arrays.asList(
+                        new Movie(1, "Dark Knight", 152, Genre.ACTION),
+                        new Movie(2, "Memento", 113, Genre.THRILLER),
+                        new Movie(3, "There's Something About Mary", 119, Genre.COMEDY),
+                        new Movie(4, "Super 8", 112, Genre.THRILLER),
+                        new Movie(5, "Scream", 111, Genre.HORROR),
+                        new Movie(6, "Home Alone", 103, Genre.COMEDY),
+                        new Movie(7, "Matrix", 136, Genre.ACTION)
+                )
+        );
+
+        movieService = new MovieService(movieRepository);
+    }
+
+    @Test
+    public void return_movies_by_genre() {
+
+        Collection<Movie> movies = movieService.findMoviesByGenre(Genre.COMEDY);
+        assertThat(getMovieIds(movies), CoreMatchers.is(Arrays.asList(3, 6)) );
+    }
+
+    @Test
+    public void return_movies_by_length() {
+
+        Collection<Movie> movies = movieService.findMoviesByLength(119);
+        assertThat(getMovieIds(movies), CoreMatchers.is(Arrays.asList(2, 3, 4, 5, 6)) );
+    }
+
+    private List<Integer> getMovieIds(Collection<Movie> movies) {
+        return movies.stream().map(Movie::getId).collect(Collectors.toList());
+    }
+}
+``` 
+- With this, we can ensure that when running the program, we receive the successful tests.
+<img src="/docs/java-testing-output3.png" alt="output 3"/>
 
 ---------
 
